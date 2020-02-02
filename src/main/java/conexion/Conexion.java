@@ -8,6 +8,7 @@ public class Conexion {
     Connection connection;
     private  static  final String DRIVER= "com.mysql.cj.jdbc.Driver";
     private static  final String DRIVER_DEPRECATED ="com.mysql.jdbc.Driver";
+
     public Connection getConnection(){
         try {
             Class.forName(DRIVER);

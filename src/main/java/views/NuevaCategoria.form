@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="views.NuevaCategoria">
+  <grid id="27dc6" binding="principal" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="887" height="477"/>
+    </constraints>
+    <properties>
+      <preferredSize width="650" height="450"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="7bf" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="67a46" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Categoria"/>
+            </properties>
+          </component>
+          <hspacer id="318d8">
+            <constraints/>
+          </hspacer>
+          <component id="6d446" class="javax.swing.JTextField" binding="txtTipo">
+            <constraints/>
+            <properties>
+              <minimumSize width="100" height="28"/>
+              <preferredSize width="400" height="28"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="9f8e3" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="ab9e5" class="javax.swing.JLabel">
+            <constraints/>
+            <properties>
+              <text value="Descripcion"/>
+            </properties>
+          </component>
+          <hspacer id="2e6be">
+            <constraints/>
+          </hspacer>
+          <component id="8544" class="javax.swing.JTextArea" binding="txtDescripcion">
+            <constraints/>
+            <properties>
+              <margin top="0" left="30" bottom="0" right="20"/>
+              <minimumSize width="100" height="24"/>
+              <preferredSize width="400" height="100"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="73911" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="4d68e" class="javax.swing.JButton" binding="crearButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <background color="-10603087"/>
+              <foreground color="-1"/>
+              <text value="Crear"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="b783" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="f74f7" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name="Arial Black" size="24" style="2"/>
+              <text value="Nueva Categoria de producto"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="4db2b" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <scrollpane id="53395">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="8c00" class="javax.swing.JTable" binding="tblTipos" custom-create="true">
+                <constraints/>
+                <properties>
+                  <autoCreateColumnsFromModel value="true"/>
+                  <autoCreateRowSorter value="true"/>
+                  <autoResizeMode value="2"/>
+                  <rowSelectionAllowed value="false"/>
+                  <verifyInputWhenFocusTarget value="false"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

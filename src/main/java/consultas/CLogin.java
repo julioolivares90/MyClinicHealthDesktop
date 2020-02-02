@@ -23,7 +23,14 @@ public class CLogin {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1,loginViewModel.getUsername());
             preparedStatement.setString(2,loginViewModel.getPassword());
-            preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+
+                userLogin.setNombre(resultSet.getString(1));
+                userLogin.setUsername(resultSet.getString(3));
+                userLogin.setRol(resultSet.getString(4));
+            }
 
         }catch (Exception e){
             System.out.println(e.getMessage());
