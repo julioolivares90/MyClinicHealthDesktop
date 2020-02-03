@@ -43,6 +43,7 @@ public class TipoDao implements Crud {
         int res=0;
         String query = "insert into tipo_producto (tipo_producto,descripcion) value(?,?)";
         try {
+            connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,tipo.getTipoProducto());
             preparedStatement.setString(2,tipo.getDescripcion());
@@ -60,7 +61,7 @@ public class TipoDao implements Crud {
         String query = "update tipo_producto set tipo_producto =? , descripcion=? where id_tipo = ?";
 
         try {
-
+            connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,tipo.getTipoProducto());
             preparedStatement.setString(2,tipo.getDescripcion());
@@ -73,15 +74,18 @@ public class TipoDao implements Crud {
         return res;
     }
 
-    public void delete(int id) {
-        String query ="delete * from tipo_producto where id=?";
+    public int delete(int id) {
+
+        String query ="delete from tipo_producto where id=?";
+        int rs=0;
         try {
+            connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1,id);
-            preparedStatement.executeQuery();
+            rs =preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return rs;
     }
 }
