@@ -9,18 +9,27 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login {
+public class Login extends JFrame {
     public JPanel panel1;
     private JTextField txtUsuario;
     private JPasswordField txtPass;
     private JButton btnLogin;
     private JButton btnCancelar;
     private JLabel logo;
+    private JLabel logo1;
     private JLabel imagen;
 
+    private  static Login login;
+    public synchronized static Login getInstance(){
+        if (login == null) {
+            login = new Login();
+        }
+        return  login;
+    }
     public Login() {
-
-
+        this.setLocationRelativeTo(null);
+        setContentPane(panel1);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 String username = txtUsuario.getText();
@@ -40,6 +49,11 @@ public class Login {
                     UserLogin userData = CLogin.Login(loginViewModel);
                     if (userData != null){
                         JOptionPane.showMessageDialog(null, "Bienvenido!!!");
+                        JFrame jFrame = new JFrame("Menu");
+                        Menu menu = new Menu();
+                        menu.setVisible(true);
+                        menu.pack();
+                        hide();
                     }else {
                         JOptionPane.showMessageDialog(null,"Usuario o contraseña incorrectos");
                     }
@@ -57,7 +71,7 @@ public class Login {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        logo = new JLabel(new ImageIcon("src/main/resources/Doctor.jpg"));
+        logo1 = new JLabel(new ImageIcon("src/main/resources/doctor.png"));
 
     }
 }

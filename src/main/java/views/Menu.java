@@ -19,6 +19,7 @@ public class Menu extends JFrame {
     private JLabel fondo;
     private JButton btnSalir;
     private JButton btnNuevaCategoria;
+    private JButton btnProveedores;
 
     public Menu() {
         this.setLocationRelativeTo(null);
@@ -87,6 +88,7 @@ public class Menu extends JFrame {
 
         btnVenta = new JButton(new ImageIcon("src/main/resources/icono_carrito_de_compra_cargado.png"));
         btnNuevaCategoria = new JButtonP();
+        btnProveedores = new JButton(new ImageIcon("src/main/resources/icono_proveedor.png"));
         btnnuevoMedicamento = new JButton( new ImageIcon("src/main/resources/crear_nuevo.png"));
         btnMedicamentos = new JButton(new ImageIcon("src/main/resources/icono_lista.png"));
         btnUsuarios = new JButton(new ImageIcon("src/main/resources/icono_lista_usuarios.png"));

@@ -6,14 +6,16 @@ import javax.swing.*;
 
 public class App {
     public static void main(String[] args){
-        LoginMedico login = LoginMedico.getInstance();
+        Login login = Login.getInstance();
+        login.setVisible(true);
+        login.pack();
         //Menu menu = new Menu();
         //JFrame jFrame = new JFrame("login");
         //jFrame.setSize(630,240);
         //jFrame.setContentPane(menu.principal);
         Menu menu = new Menu();
-        menu.setVisible(true);
-        menu.pack();
+        //menu.setVisible(true);
+        //menu.pack();
        /*
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jFrame.pack();
