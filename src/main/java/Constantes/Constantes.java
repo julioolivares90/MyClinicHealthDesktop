@@ -9,4 +9,5 @@ public class Constantes {
     public static String CAMPO_VACIO= "Este campo no puede estar vacio!!";
     public static String AGREGADO_CON_EXITO="Agregado con exito!!";
     public static String NOSE_PUDO_AGREGAR= "Ocurrio un error!";
+    public static String SELECCIONA_FILA= "deves seleccionar una fila de la tabla";
 }
