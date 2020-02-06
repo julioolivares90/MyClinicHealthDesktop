@@ -8,6 +8,15 @@ public class Producto {
     private Double ganancia;
     private int cantidad;
     private int IdTipoProducto;
+    private int idProveedor;
+
+    public int getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(int idProveedor) {
+        this.idProveedor = idProveedor;
+    }
 
     public int getID() {
         return ID;

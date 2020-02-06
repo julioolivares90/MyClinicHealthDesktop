@@ -69,7 +69,7 @@ public class Preedores  extends  JFrame{
                 int id = Integer.parseInt(txtID.getText());
                 if (id <= 0){
                     JOptionPane.showMessageDialog(null,Constantes.SELECCIONA_FILA);
-                    return;
+
                 }else {
                     Proveedor proveedor = new Proveedor();
                     proveedor.setId_proveedor(id);
@@ -94,14 +94,21 @@ public class Preedores  extends  JFrame{
         eliminarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 ProveedorDao proveedorDao = new ProveedorDao();
-                int res = proveedorDao.delete(Integer.parseInt(txtID.getText()));
-                if (res >0){
-                    JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
-                    cargarDatos();
+                int id = Integer.parseInt(txtID.getText());
+                if (id <= 0 ){
+                    JOptionPane.showMessageDialog(null,Constantes.SELECCIONA_FILA);
 
                 }else {
-                    JOptionPane.showMessageDialog(null,"ocurrio un error!");
+                    int res = proveedorDao.delete(id);
+                    if (res >0){
+                        JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
+                        cargarDatos();
+
+                    }else {
+                        JOptionPane.showMessageDialog(null,"ocurrio un error!");
+                    }
                 }
+
             }
         });
         limpiarButton.addActionListener(new ActionListener() {

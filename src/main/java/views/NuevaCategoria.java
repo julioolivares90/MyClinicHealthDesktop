@@ -16,7 +16,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 
-public class NuevaCategoria {
+public class NuevaCategoria  extends JFrame{
     TipoDao tipoDao = new TipoDao();
 
     public JPanel principal;
@@ -68,32 +68,44 @@ public class NuevaCategoria {
             public void actionPerformed(ActionEvent actionEvent) {
                 Tipo tipo = new Tipo();
                 TipoDao tipoDao = new TipoDao();
-                tipo.setId(Integer.parseInt(txtId.getText()));
-                tipo.setTipoProducto(txtTipo.getText());
-                tipo.setDescripcion(txtDescripcion.getText());
+                int id = Integer.parseInt(txtId.getText());
+                if (id <= 0){
+                    JOptionPane.showMessageDialog(null,Constantes.SELECCIONA_FILA);
+                }else {
+                    tipo.setId(id);
+                    tipo.setTipoProducto(txtTipo.getText());
+                    tipo.setDescripcion(txtDescripcion.getText());
 
-               int rs = tipoDao.update(tipo);
-               if (rs > 0){
-                   JOptionPane.showMessageDialog(null,"Actualizado con exito");
-                   cargarDatos();
-                   limpiar();
-               }
-               else {
-                   JOptionPane.showMessageDialog(null,"Ocuurrio un error al actualizar");
-               }
+                    int rs = tipoDao.update(tipo);
+                    if (rs > 0){
+                        JOptionPane.showMessageDialog(null,"Actualizado con exito");
+                        cargarDatos();
+                        limpiar();
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null,"Ocuurrio un error al actualizar");
+                    }
+                }
+
             }
         });
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 TipoDao tipoDao = new TipoDao();
-                int rs = tipoDao.delete(Integer.parseInt(txtId.getText()));
-                if (rs > 0 ){
-                    JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
-                    cargarDatos();
-                    limpiar();
-                }else {
-                    JOptionPane.showMessageDialog(null,"Ocurrio un error!!");
+                int id = Integer.parseInt(txtId.getText());
+                if (id <= 0){
+                    JOptionPane.showMessageDialog(null,Constantes.SELECCIONA_FILA);
+                }else  {
+                    int rs = tipoDao.delete(id);
+                    if (rs > 0 ){
+                        JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
+                        cargarDatos();
+                        limpiar();
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Ocurrio un error!!");
+                    }
                 }
+
             }
         });
         tblTipos.addMouseListener(new MouseAdapter() {

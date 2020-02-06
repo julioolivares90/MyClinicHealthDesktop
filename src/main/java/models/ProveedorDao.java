@@ -82,4 +82,25 @@ public class ProveedorDao implements Crud {
         }
         return res;
     }
+
+    public List<ProveedorViewModel> getProveedoresComboBox(){
+        List<ProveedorViewModel> proveedors = new ArrayList<ProveedorViewModel>();
+        String query = "select id_proveedor , nombre_proveedor from proveedores";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                ProveedorViewModel proveedorViewModel = new ProveedorViewModel();
+
+                proveedorViewModel.setID(resultSet.getInt(1));
+                proveedorViewModel.setNombre(resultSet.getString(2));
+
+                proveedors.add(proveedorViewModel);
+            }
+        }catch (Exception e){
+
+        }
+        return proveedors;
+    }
 }

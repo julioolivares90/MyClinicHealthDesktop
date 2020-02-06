@@ -88,4 +88,23 @@ public class TipoDao implements Crud {
         }
         return rs;
     }
+    public List<Tipo> getTiposComboBox(){
+        List<Tipo> tipos = new ArrayList<Tipo>();
+        String query = "select id_tipo , tipo_producto from tipo_producto";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Tipo tipo = new Tipo();
+                tipo.setId(resultSet.getInt(1));
+                tipo.setTipoProducto(resultSet.getString(2));
+
+                tipos.add(tipo);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tipos;
+    }
 }
