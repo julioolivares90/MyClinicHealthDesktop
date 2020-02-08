@@ -46,7 +46,7 @@ public class ProductoDao  implements Crud{
     public int add(Object object) {
         Producto producto = (Producto) object;
         int res =0;
-        String query = "insert into producto (nombre,costo_por_unidad,costo_publico,ganancia,cantidad,id_tipo_producto) value (?,?,?,?,?,?)";
+        String query = "insert into producto (nombre,costo_por_unidad,costo_publico,ganancia,cantidad,id_tipo_producto,id_proveedor) value (?,?,?,?,?,?,?)";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -56,6 +56,7 @@ public class ProductoDao  implements Crud{
             preparedStatement.setDouble(4,producto.getGanancia());
             preparedStatement.setInt(5,producto.getCantidad());
             preparedStatement.setInt(6,producto.getIdTipoProducto());
+            preparedStatement.setInt(7,producto.getIdProveedor());
             res = preparedStatement.executeUpdate();
         }catch (Exception e){
             System.out.println(e.getMessage());

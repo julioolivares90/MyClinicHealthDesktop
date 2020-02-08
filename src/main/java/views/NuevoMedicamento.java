@@ -1,6 +1,7 @@
 package views;
 
 import models.*;
+import utilidades.CalculosMonetarios;
 import utilidades.Mensajes;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class NuevoMedicamento extends JFrame {
@@ -57,13 +59,13 @@ public class NuevoMedicamento extends JFrame {
                         txtCantidad.requestFocus();
                     }
                     try {
-                        costoPorUnidad = Double.valueOf(txtCostoPorUnidad.getText());
+                        costoPorUnidad = Double.parseDouble(txtCostoPorUnidad.getText());
                     }catch (Exception e){
                         Mensajes.SoloNumerosDoubles();
                         txtCostoPorUnidad.requestFocus();
                     }
                     try {
-                        costoPublico = Double.valueOf(txtCostoPublico.getText());
+                        costoPublico = Double.parseDouble(txtCostoPublico.getText());
                     }catch (Exception e){
                         Mensajes.SoloNumerosDoubles();
                         txtCostoPublico.requestFocus();
@@ -80,8 +82,8 @@ public class NuevoMedicamento extends JFrame {
                     else if (idTipo <=0){
                         Mensajes.MensajeComboTipoProducto();
                     }else {
-                        double ganancia = costoPublico-costoPorUnidad;
-
+                        BigDecimal Resultganancia = CalculosMonetarios.CalcularGanancia(new BigDecimal(costoPublico),new BigDecimal(costoPorUnidad));
+                        double ganancia = Double.parseDouble(Resultganancia.toString());
                         producto.setNombre(nombre);
                         producto.setCantidad(cantidad);
                         producto.setCostoPublico(costoPublico);
