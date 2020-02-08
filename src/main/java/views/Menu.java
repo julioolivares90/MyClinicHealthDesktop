@@ -57,7 +57,7 @@ public class Menu extends JFrame {
         });
         btnMedicamentos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-
+                NuevoMedicamento nuevoMedicamento;
             }
         });
         btnUsuarios.addActionListener(new ActionListener() {
@@ -75,6 +75,16 @@ public class Menu extends JFrame {
                 NuevaCategoria nuevaCategoria = new NuevaCategoria();
                 JFrame jFrame = new JFrame("Nueva categoria");
                 jFrame.setContentPane(nuevaCategoria.principal);
+                jFrame.setLocationRelativeTo(null);
+                jFrame.pack();
+                jFrame.setVisible(true);
+            }
+        });
+        btnProveedores.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                Preedores preedores = new Preedores();
+                JFrame jFrame = new JFrame("Nuevo proveedor");
+                jFrame.setContentPane(preedores.principal);
                 jFrame.setLocationRelativeTo(null);
                 jFrame.pack();
                 jFrame.setVisible(true);

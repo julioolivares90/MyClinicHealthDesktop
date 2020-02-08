@@ -15,7 +15,7 @@ public class ProveedorDao implements Crud {
     ResultSet resultSet;
     public List listar() {
         List<Proveedor> proveedors = new ArrayList<Proveedor>();
-        String query = "select * from preveedores";
+        String query = "select * from proveedores";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -99,7 +99,7 @@ public class ProveedorDao implements Crud {
                 proveedors.add(proveedorViewModel);
             }
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return proveedors;
     }
