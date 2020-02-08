@@ -17,6 +17,9 @@ public class Mensajes {
     public static void MensajeComboProveedor(){
         JOptionPane.showMessageDialog(null,"Selecciona un proveedor");
     }
+    public static void MensajeComboTipoUser(){
+        JOptionPane.showMessageDialog(null,"Selecciona un tipo de usuario");
+    }
     public static void MensajeComboTipoProducto(){
         JOptionPane.showMessageDialog(null,"Selecciona un tipo de medicamento");
     }
@@ -24,6 +27,13 @@ public class Mensajes {
         JOptionPane.showMessageDialog(null,"Agregado con exito!!");
     }
     public static void OcurrioUnError(){
-        JOptionPane.showMessageDialog(null,"Ocurrio un error");
+        JOptionPane.showMessageDialog(null,"Ocurrio un error!!!");
+    }
+
+    public static void SeleccionaUnaFila(){
+        JOptionPane.showMessageDialog(null,"selecciona una fila ");
+    }
+    public  static  void  BorradoConExito(){
+        JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
     }
 }

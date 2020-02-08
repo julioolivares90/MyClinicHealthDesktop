@@ -16,11 +16,12 @@ public class UsuarioDao implements Crud {
     private ResultSet resultSet;
     public List listar() {
         List<UsuarioViewModel> usuarios = new ArrayList<UsuarioViewModel>();
-        String query = "select u.id u.nombre , u.apellido, u.username , r.rol from usuarios as u inner join rol as r on r.id_rol = u.id_rol ";
+        String query = "select usuarios.id, usuarios.nombre , usuarios.apellido, usuarios.username , rol.rol from usuarios  inner join rol  on rol.id_rol = usuarios.id_rol;";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
+            System.out.println(resultSet.toString());
             while (resultSet.next()){
                 UsuarioViewModel usuario = new UsuarioViewModel();
                 usuario.setID(resultSet.getInt(1));
@@ -28,6 +29,8 @@ public class UsuarioDao implements Crud {
                 usuario.setApellido(resultSet.getString(3));
                 usuario.setUserName(resultSet.getString(4));
                 usuario.setRol(resultSet.getString(5));
+
+                usuarios.add(usuario);
             }
         }
         catch (Exception e ){
@@ -39,7 +42,7 @@ public class UsuarioDao implements Crud {
     public int add(Object object) {
         Usuario usuario = (Usuario) object;
         int res=0;
-        String query = "insert into usuarios (nombre,apellido,username,password,id_rol) value(?,?,?,?,?)";
+        String query = "insert into usuarios (nombre,apellido,username,pass,id_rol) value(?,?,?,?,?)";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
@@ -59,7 +62,7 @@ public class UsuarioDao implements Crud {
     public int update(Object object) {
         Usuario usuario = (Usuario) object;
         int res=0;
-        String query = "update usuarios set nombre=?,apellido=?,username=?,password=?,id_rol=? where id=?";
+        String query = "update usuarios set nombre=?,apellido=?,username=?,pass=?,id_rol=? where id=?";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);

@@ -5,6 +5,7 @@ import components.EditText;
 
 import models.Tipo;
 import models.TipoDao;
+import utilidades.Mensajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -114,7 +115,7 @@ public class NuevaCategoria  extends JFrame{
                 super.mouseClicked(mouseEvent);
                 int fila = tblTipos.getSelectedRow();
                 if (fila == -1){
-                    JOptionPane.showMessageDialog(null,"Deve Seleccionar una fila");
+                    Mensajes.SeleccionaUnaFila();
                 }else {
                     int id = Integer.parseInt(tblTipos.getValueAt(fila,0).toString());
                     String nombre = tblTipos.getValueAt(fila,1).toString();

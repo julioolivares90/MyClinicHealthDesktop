@@ -67,6 +67,12 @@ public class Menu extends JFrame {
         });
         btnUsuarios.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                Usuarios usuarios = new Usuarios();
+                JFrame jFrame = new JFrame("Usuarios");
+                jFrame.setLocationRelativeTo(null);
+                jFrame.setContentPane(usuarios.principal);
+                jFrame.pack();
+                jFrame.setVisible(true);
 
             }
         });
