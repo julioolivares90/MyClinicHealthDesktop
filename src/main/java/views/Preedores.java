@@ -154,9 +154,11 @@ public class Preedores  extends  JFrame{
     private PaginadorDeTabla<Proveedor> paginadorDeTabla;
     private void  cargarDatos(){
 
+        ProveedorDao proveedorDao = new ProveedorDao();
         TableModel tableModel = crearModelTable();
+        List<Proveedor> proveedors = proveedorDao.listar();
         //this.tblProveedores.setModel(crearModelTable());
-        tblProveedores.setModel(tableModel);
+        //tblProveedores.setModel(tableModel);
         Object[] objects = new Object[4];
         DefaultTableModel defaultTableModel = new DefaultTableModel();
         defaultTableModel.addColumn("ID");
@@ -165,30 +167,24 @@ public class Preedores  extends  JFrame{
         defaultTableModel.addColumn("Telenofo Proveedor");
 
 
-        JTableProveedorDeDatos<Proveedor> proveedorDeDatos = crearProveedorDeDatos();
+        //JTableProveedorDeDatos<Proveedor> proveedorDeDatos = crearProveedorDeDatos();
         //System.out.println(proveedorDeDatos.getTotalRowCount());
         //JTablePaginator<Proveedor> paginator = (JTablePaginator<Proveedor>) tableModel;
         //List<Proveedor> proveedorList = proveedorDeDatos.getRows(0,proveedorDeDatos.getTotalRowCount());
         //paginator.setLisadoDeFilas(proveedorList);
 
-        paginadorDeTabla = new PaginadorDeTabla<Proveedor>(tblProveedores,proveedorDeDatos,new int[]{5,10,20,50,75,100},10);
+        //paginadorDeTabla = new PaginadorDeTabla<Proveedor>(tblProveedores,proveedorDeDatos,new int[]{5,10,20,50,75,100},10);
 
 
-
-/*
-para tablas sin paginacion
         for (Proveedor proveedor: proveedors
              ) {
             objects[0] = proveedor.getId_proveedor();
             objects[1] = proveedor.getNombre();
             objects[2] = proveedor.getCorreo_preoveedor();
             objects[3]= proveedor.getTelefono_proveedor();
-            //tableModel.setValueAt(proveedor,);
+            defaultTableModel.addRow(objects);
         }
-
- */
-
-
+        tblProveedores.setModel(defaultTableModel);
     }
 
     private JTableProveedorDeDatos<Proveedor> crearProveedorDeDatos(){

@@ -1,7 +1,9 @@
 package views;
 
+import jdk.nashorn.internal.scripts.JO;
 import models.Producto;
 import models.ProductoDao;
+import utilidades.Mensajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,8 +19,11 @@ public class Medicamentos extends JFrame {
     private JTable tblMedicamentos;
     private JButton actualizarButton;
     private JButton eliminarButton;
+    public JComboBox pageJComboBox;
 
+    int fila;
 
+    Producto producto = new Producto();
     DefaultTableModel tableModel;
     public Medicamentos() {
 
@@ -30,11 +35,65 @@ public class Medicamentos extends JFrame {
         });
         actualizarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                ProductoDao productoDao = new ProductoDao();
+                if (fila == -1){
+                    Mensajes.SeleccionaUnaFila();
+                }else{
+
+                    int rs = productoDao.update(producto);
+
+                    if (rs > 0){
+                        JOptionPane.showMessageDialog(null,"Actualizado con exito !!");
+                        fillTabla();
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Ocurrio un error ");
+                    }
+                }
 
             }
         });
         eliminarButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
+                ProductoDao productoDao = new ProductoDao();
+                if (fila == -1){
+                    Mensajes.SeleccionaUnaFila();
+                }else {
+                    int rs = productoDao.delete(producto.getID());
+                    if (rs>0){
+                        JOptionPane.showMessageDialog(null,"Eliminado con exito");
+                        fillTabla();
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Ocurrio un error");
+                    }
+                }
+            }
+        });
+        tblMedicamentos.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent mouseEvent) {
+                super.mouseClicked(mouseEvent);
+                fila = tblMedicamentos.getSelectedRow();
+                if(fila == -1){
+                    Mensajes.SeleccionaUnaFila();
+                }
+                int id = Integer.parseInt(tblMedicamentos.getValueAt(fila,0).toString());
+                String nombre = tblMedicamentos.getValueAt(fila,1).toString();
+                double costoPorUnidad = Double.parseDouble(tblMedicamentos.getValueAt(fila,2).toString());
+                double costoPublico = Double.parseDouble(tblMedicamentos.getValueAt(fila,3).toString());
+                double ganancia = Double.parseDouble(tblMedicamentos.getValueAt(fila,4).toString());
+                int cantidad = Integer.parseInt(tblMedicamentos.getValueAt(fila,5).toString());
+                int tipoProducto = Integer.parseInt(tblMedicamentos.getValueAt(fila,6).toString());
+                int proveedor = Integer.parseInt(tblMedicamentos.getValueAt(fila,7).toString());
+
+                producto.setID(id);
+                producto.setNombre(nombre);
+                producto.setCostoPoUnidad(costoPorUnidad);
+                producto.setCostoPublico(costoPublico);
+                producto.setGanancia(ganancia);
+                producto.setCantidad(cantidad);
+                producto.setIdTipoProducto(tipoProducto);
+                producto.setIdProveedor(proveedor);
+
 
             }
         });
