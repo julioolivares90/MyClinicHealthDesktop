@@ -14,7 +14,7 @@ public class CLogin {
     public static UserLogin Login(LoginViewModel loginViewModel){
         PreparedStatement preparedStatement;
         ResultSet resultSet;
-        String  sql = "select u.nombre , u.pass , u.username, r.rol from usuarios as u inner join rol as r on u.id_rol = r.id_rol where u.username = ? and u.pass = ?;";
+        String  sql = "select u.id, u.nombre , u.pass , u.username, r.rol from usuarios as u inner join rol as r on u.id_rol = r.id_rol where u.username = ? and u.pass = ?;";
         Conexion conexion = new Conexion();
         UserLogin userLogin = new UserLogin();
         try {
@@ -27,7 +27,8 @@ public class CLogin {
 
             while (resultSet.next()){
 
-                userLogin.setNombre(resultSet.getString(1));
+                userLogin.setId(resultSet.getInt(1));
+                userLogin.setNombre(resultSet.getString(2));
                 userLogin.setUsername(resultSet.getString(3));
                 userLogin.setRol(resultSet.getString(4));
             }

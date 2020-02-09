@@ -1,6 +1,16 @@
 package models;
 
 public class UserLogin {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String username;
     private String nombre;
     private String rol;

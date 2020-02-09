@@ -41,13 +41,15 @@ public class VentaDao  implements Crud{
         String query = "insert into ventas (fecha_venta,monto,descuento,id_usuario) value(?,?,?,?)";
         int rs = 0;
         try {
+
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setDate(1,Date.valueOf(venta.getFecha_venta().toString()));
+            preparedStatement.setString(1,venta.getFecha_venta());
             preparedStatement.setDouble(2,venta.getMonto());
             preparedStatement.setInt(3,venta.getDescuento());
             preparedStatement.setInt(4,venta.getId_usuario());
             rs = preparedStatement.executeUpdate();
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -84,5 +86,34 @@ public class VentaDao  implements Crud{
             System.out.println(e.getMessage());
         }
         return res;
+    }
+
+    public  String IdVentas(){
+        String id ="";
+        String query ="select MAX(id_venta) from ventas";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                id = resultSet.getString(1);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return id;
+    }
+
+    public int GuardarVenta(Venta venta){
+        int rs =0;
+        String query = "insert into fecha_venta,monto,descuento,id_usuario";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return rs;
     }
 }

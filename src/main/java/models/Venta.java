@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Venta {
     private int id_venta;
-    private Date fecha_venta;
+    private String  fecha_venta;
     private Double monto;
     private int descuento;
     private int id_usuario;
@@ -17,11 +17,11 @@ public class Venta {
         this.id_venta = id_venta;
     }
 
-    public Date getFecha_venta() {
+    public String getFecha_venta() {
         return fecha_venta;
     }
 
-    public void setFecha_venta(Date fecha_venta) {
+    public void setFecha_venta(String  fecha_venta) {
         this.fecha_venta = fecha_venta;
     }
 

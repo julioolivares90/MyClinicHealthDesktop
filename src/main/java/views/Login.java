@@ -19,6 +19,11 @@ public class Login extends JFrame {
     private JLabel logo1;
     private JLabel imagen;
 
+    public int getIdUser() {
+        return idUser;
+    }
+
+    private int idUser=0;
     private  static Login login;
     public synchronized static Login getInstance(){
         if (login == null) {
@@ -48,6 +53,7 @@ public class Login extends JFrame {
 
                     UserLogin userData = CLogin.Login(loginViewModel);
                     if (userData != null){
+                        idUser = userData.getId();
                         JOptionPane.showMessageDialog(null, "Bienvenido!!!");
                         JFrame jFrame = new JFrame("Menu");
                         Menu menu = new Menu();

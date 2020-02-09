@@ -82,7 +82,7 @@ public class Preedores  extends  JFrame{
                     proveedor.setTelefono_proveedor(telefono);
 
                     ProveedorDao proveedorDao = new ProveedorDao();
-                    int res = proveedorDao.add(proveedor);
+                    int res = proveedorDao.update(proveedor);
                     if (res > 0){
                         JOptionPane.showMessageDialog(null,Constantes.AGREGADO_CON_EXITO);
                         limpiar();

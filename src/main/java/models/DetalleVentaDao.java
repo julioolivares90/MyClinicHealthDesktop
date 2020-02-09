@@ -40,7 +40,7 @@ public class DetalleVentaDao implements Crud {
     public int add(Object object) {
         DetalleVenta detalleVenta = (DetalleVenta) object;
         int res =0;
-        String query = "insert into detalle_venta (id_venta,id_producto,cantidad,precio_venta) value (?,?,?,?)";
+        String query = "insert into detalle_venta (id_venta,id_producto,cantidad,precioVenta) value (?,?,?,?)";
         try {
             connection = conexion.getConnection();
             preparedStatement = connection.prepareStatement(query);

@@ -16,6 +16,48 @@ public class ProductoDao  implements Crud{
     PreparedStatement preparedStatement;
     ResultSet resultSet;
 
+    public List<ProductoViewModel> showData(){
+        List<ProductoViewModel> productos = new ArrayList<ProductoViewModel>();
+        String query = "select id_producto, nombre ,costo_publico,cantidad from producto";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                ProductoViewModel productoViewModel = new ProductoViewModel();
+                productoViewModel.setId_producto(resultSet.getInt(1));
+                productoViewModel.setNombre(resultSet.getString(2));
+                productoViewModel.setCosto_publico(resultSet.getDouble(3));
+                productoViewModel.setCantidad(resultSet.getInt(4));
+
+                productos.add(productoViewModel);
+            }
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return productos;
+    }
+    public ProductoViewModel findByName(String name){
+        String query = "select id_producto, nombre ,costo_publico,cantidad from producto where nombre like '%' ? '%' ";
+        ProductoViewModel productoViewModel = new ProductoViewModel();
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1,name);
+            resultSet = preparedStatement.executeQuery();
+
+            resultSet.first();
+
+            productoViewModel.setId_producto(resultSet.getInt(1));
+            productoViewModel.setNombre(resultSet.getString(2));
+            productoViewModel.setCosto_publico(resultSet.getDouble(3));
+            productoViewModel.setCantidad(resultSet.getInt(4));
+
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return productoViewModel;
+    }
     public List listar() {
         List<Producto> productos = new ArrayList<Producto>();
         String query = "select * from producto";
@@ -34,6 +76,7 @@ public class ProductoDao  implements Crud{
                 producto.setGanancia(resultSet.getDouble(5));
                 producto.setCantidad(resultSet.getInt(6));
                 producto.setIdTipoProducto(resultSet.getInt(7));
+                producto.setIdProveedor(resultSet.getInt(8));
                 productos.add(producto);
             }
         }catch (Exception e){
