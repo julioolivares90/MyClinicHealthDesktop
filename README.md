@@ -1,5 +1,6 @@
 # MyClinicHealthDesktop
 ## capturas
+
 ![](https://github.com/julioolivares90/MyClinicHealthDesktop/blob/master/imagenes/img1.jpg)
 
 
