@@ -23,7 +23,24 @@ public class Medicamentos extends JFrame {
     private JTable tblMedicamentos;
     private JButton actualizarButton;
     private JButton eliminarButton;
-    public JComboBox pageJComboBox;
+
+    public JComboBox getComboBoxFilasPermitidas() {
+        return comboBoxFilasPermitidas;
+    }
+
+    public void setComboBoxFilasPermitidas(JComboBox comboBoxFilasPermitidas) {
+        this.comboBoxFilasPermitidas = comboBoxFilasPermitidas;
+    }
+
+    private JComboBox comboBoxFilasPermitidas;
+
+    public JPanel getPaginadorPanel() {
+        return paginadorPanel;
+    }
+
+    private JPanel paginadorPanel;
+    private JComboBox pageJComboBox;
+
 
     int fila;
 
@@ -31,11 +48,14 @@ public class Medicamentos extends JFrame {
     DefaultTableModel tableModel;
     private final ProductosController controller;
 
+
     public JTable getTblMedicamentos() {
         return tblMedicamentos;
     }
 
     public Medicamentos() {
+        this.setContentPane(principal);
+        this.setLocationRelativeTo(null);
 
         controller = new ProductosController(this);
         tblMedicamentos.addMouseListener(new MouseAdapter() {
@@ -113,11 +133,13 @@ public class Medicamentos extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         tblMedicamentos = new JTable();
-
-        this.tblMedicamentos.setModel(crearModeloDeTabla());
+        initTable();
         //fillTabla();
     }
 
+    private void initTable(){
+        this.tblMedicamentos.setModel(crearModeloDeTabla());
+    }
     private TableModel crearModeloDeTabla() {
 
         return new ModeloDeTabla<ProductoForTable>() {

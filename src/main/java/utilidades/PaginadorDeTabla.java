@@ -3,80 +3,136 @@ package utilidades;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 public class PaginadorDeTabla <T> {
-    private JTable table;
-    private JTableProveedorDeDatos<T> proveedorDeDatos;
-    private int[] arrayFilasPermitidas;
+    private JTable tabla;
+    private ProveedorDeDatosPaginacion<T> proveedorDeDatosPaginacion;
+    private int [] arrayFilasPermitidas;
     private int filaPermitida;
-    private JTablePaginator<T> paginator;
-    private int paginaActual = 1;
+    private ModeloDeTabla<T> modeloDeTabla;
+    private int paginaActual=1;
 
-    private JComboBox listaLimiteDeFilas;
+    private JComboBox comboBoxFilasPermitidas;
     private JPanel panelPaginacionBotones;
+    private int limiteBotonesPaginadores =9;
 
-    private int filasPermitidasPorDefecto;
-
-    private final  int limiteBotonesPaginadores = 9;
-
-    public PaginadorDeTabla(JTable table,JTableProveedorDeDatos<T> proveedorDeDatos,int[] arrayFilasPermitidas,int filaPermitida){
-        this.table= table;
-        this.proveedorDeDatos = proveedorDeDatos;
+    public PaginadorDeTabla(JTable tabla,ProveedorDeDatosPaginacion<T> proveedorDeDatosPaginacion,
+                            int[] arrayFilasPermitidas,int filaPermitida){
+        this.tabla= tabla;
+        this.proveedorDeDatosPaginacion = proveedorDeDatosPaginacion;
         this.arrayFilasPermitidas = arrayFilasPermitidas;
         this.filaPermitida = filaPermitida;
+
         init();
     }
 
     private void init() {
         inicializarModeloDeTabla();
         paginar();
+
     }
 
     private void inicializarModeloDeTabla(){
-        TableModel model  = table.getModel();
-        if (!(model instanceof  JTablePaginator)){
-            throw new IllegalArgumentException("Table model debe ser un subclase de objectdatamodel");
-        }
-        model =  model;
-       /* try {
-            this.paginator = (JTablePaginator<T>) this.table.getModel();
+        try{
+            this.modeloDeTabla = (ModeloDeTabla<T>) tabla.getModel();
         }catch (Exception ex){
-            System.out.println("Error metodo inicializarModeloDeTabla()"+ex.getMessage());
+            System.out.println(ex.getMessage());
         }
 
-        */
     }
 
-    public  void crearListadoDeFilasPermitidas(JPanel panelPaginador){
+    public   void crearListadoDeFilasPermitidas(JPanel panelPaginador){
         panelPaginacionBotones = new JPanel(new GridLayout(1,limiteBotonesPaginadores,3,3));
         panelPaginador.add(panelPaginacionBotones);
         if (arrayFilasPermitidas != null){
-            Integer arrary [] = new Integer[arrayFilasPermitidas.length];
-            for (int i =0;i<arrayFilasPermitidas.length;i++){
-                arrary[i] = arrayFilasPermitidas[i];
+            Integer[] array = new Integer[arrayFilasPermitidas.length];
+            for (int i = 0; i < arrayFilasPermitidas.length; i++) {
+                array[i] = arrayFilasPermitidas[i];
             }
-            listaLimiteDeFilas = new JComboBox(arrary);
+            comboBoxFilasPermitidas = new JComboBox(array);
             panelPaginador.add(Box.createHorizontalStrut(15));
-            panelPaginador.add(new JLabel("Número de Filas: "));
-            panelPaginador.add(listaLimiteDeFilas);
+            panelPaginador.add(new JLabel("Numero de filas"));
+            panelPaginador.add(comboBoxFilasPermitidas);
         }
     }
     public void enventComboBox(JComboBox pageComboBox){
-
-        int currentPageStartRow = ((paginaActual - 1) * filasPermitidasPorDefecto) + 1;
-        filasPermitidasPorDefecto = (Integer) pageComboBox.getSelectedItem();
-        paginaActual = ((currentPageStartRow - 1) / filasPermitidasPorDefecto) + 1;
+        int filaInicialPagina = ((paginaActual-1) * filaPermitida) + 1;
+        filaPermitida = (Integer) pageComboBox.getSelectedItem();
+        paginaActual = ((filaInicialPagina-1) / filaPermitida) + 1;
         paginar();
     }
-    private void paginar(){
-        int inicio = (paginaActual -1) * filaPermitida;
-        int finalizacion= inicio + filaPermitida;
-        if (finalizacion > proveedorDeDatos.getTotalRowCount()){
-            finalizacion = proveedorDeDatos.getTotalRowCount();
+
+    public void  actualizarBotonesPaginacion(){
+        panelPaginacionBotones.removeAll();
+        int totalFilas = proveedorDeDatosPaginacion.getTotalRowCount();
+        int paginas =(int) Math.ceil((double) totalFilas/filaPermitida);
+        if (paginas > limiteBotonesPaginadores){
+            agregarBotonesPaginacion(panelPaginacionBotones,1);
+            if (paginaActual <= (limiteBotonesPaginadores+1)/2){
+                agregarRangoBotonesPaginacion(panelPaginacionBotones,2,limiteBotonesPaginadores-2);
+                panelPaginacionBotones.add(crearElipses());
+                agregarBotonesPaginacion(panelPaginacionBotones,paginas);
+            }else if (paginaActual > (paginas-((limiteBotonesPaginadores+1)/2))){
+                panelPaginacionBotones.add(crearElipses());
+                agregarRangoBotonesPaginacion(panelPaginacionBotones,paginas-limiteBotonesPaginadores+3,paginas);
+            }else {
+                panelPaginacionBotones.add(crearElipses());
+                int inicio = paginaActual - (limiteBotonesPaginadores -4) / 2;
+                int finalizacion=inicio+limiteBotonesPaginadores-5;
+                agregarRangoBotonesPaginacion(panelPaginacionBotones,inicio,finalizacion);
+                panelPaginacionBotones.add(crearElipses());
+                agregarBotonesPaginacion(panelPaginacionBotones,paginas);
+            }
+        }else {
+            agregarRangoBotonesPaginacion(panelPaginacionBotones,1,paginas);
         }
-        List<T> lista = proveedorDeDatos.getRows(inicio,finalizacion);
-        paginator.setLisadoDeFilas(lista);
-        paginator.fireTableDataChanged();
+        panelPaginacionBotones.getParent().validate();
+        panelPaginacionBotones.getParent().repaint();
+    }
+    private JLabel crearElipses(){
+        return new JLabel("...",SwingConstants.CENTER);
+    }
+    private void agregarRangoBotonesPaginacion(JPanel panelPadre , int inicio,int finalizacion){
+        int init = inicio;
+        for (inicio = init;inicio <= finalizacion;inicio++){
+            agregarBotonesPaginacion(panelPadre,inicio);
+        }
+    }
+    private void  agregarBotonesPaginacion(JPanel panelPadre,int numeroPagina){
+        JToggleButton toggleButton = new JToggleButton(Integer.toString(numeroPagina));
+        toggleButton.setMargin(new Insets(1,3,1,3));
+        panelPadre.add(toggleButton);
+
+        //veficar en pagina se encuentra
+        if (numeroPagina == paginaActual){
+            toggleButton.setSelected(true);
+        }
+        toggleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                paginaActual = Integer.parseInt(actionEvent.getActionCommand());
+                paginar();
+            }
+        });
+    }
+    private void paginar(){
+        int inicio = (paginaActual-1) * filaPermitida; //pagina actual es uno al restarle 1 tendria valor de cero y al multiplicarlo por la fila permitida su valor siempre es cero
+        int finalizacion =inicio + filaPermitida; // 0 + 10
+        if (finalizacion > proveedorDeDatosPaginacion.getTotalRowCount()){
+            finalizacion = proveedorDeDatosPaginacion.getTotalRowCount();
+        }
+        List<T> lista = proveedorDeDatosPaginacion.getRows(inicio,finalizacion);
+        modeloDeTabla.setLista(lista);
+        modeloDeTabla.fireTableDataChanged(); //permite saber si se han realizado cambios en el modelo de tabla
+    }
+
+    public JComboBox getComboBoxFilasPermitidas() {
+        return comboBoxFilasPermitidas;
+    }
+
+    public void setComboBoxFilasPermitidas(JComboBox comboBoxFilasPermitidas) {
+        this.comboBoxFilasPermitidas = comboBoxFilasPermitidas;
     }
 }
