@@ -1,9 +1,12 @@
 package views;
 
+import controllers.ProductosController;
 import jdk.nashorn.internal.scripts.JO;
 import models.Producto;
 import models.ProductoDao;
+import models.ProductoForTable;
 import utilidades.Mensajes;
+import utilidades.ModeloDeTabla;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class Medicamentos extends JFrame {
+
     public JPanel principal;
     private JTable tblMedicamentos;
     private JButton actualizarButton;
@@ -25,8 +29,15 @@ public class Medicamentos extends JFrame {
 
     Producto producto = new Producto();
     DefaultTableModel tableModel;
+    private final ProductosController controller;
+
+    public JTable getTblMedicamentos() {
+        return tblMedicamentos;
+    }
+
     public Medicamentos() {
 
+        controller = new ProductosController(this);
         tblMedicamentos.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
@@ -44,7 +55,7 @@ public class Medicamentos extends JFrame {
 
                     if (rs > 0){
                         JOptionPane.showMessageDialog(null,"Actualizado con exito !!");
-                        fillTabla();
+                        //fillTabla();
                     }else {
                         JOptionPane.showMessageDialog(null,"Ocurrio un error ");
                     }
@@ -61,7 +72,7 @@ public class Medicamentos extends JFrame {
                     int rs = productoDao.delete(producto.getID());
                     if (rs>0){
                         JOptionPane.showMessageDialog(null,"Eliminado con exito");
-                        fillTabla();
+                        //fillTabla();
                     }else {
                         JOptionPane.showMessageDialog(null,"Ocurrio un error");
                     }
@@ -102,7 +113,63 @@ public class Medicamentos extends JFrame {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         tblMedicamentos = new JTable();
-        fillTabla();
+
+        this.tblMedicamentos.setModel(crearModeloDeTabla());
+        //fillTabla();
+    }
+
+    private TableModel crearModeloDeTabla() {
+
+        return new ModeloDeTabla<ProductoForTable>() {
+
+            public Object getValueAt(ProductoForTable producto, int columna) {
+                switch (columna){
+                    case 0:
+                        return producto.getID();
+                    case 1:
+                        return producto.getNombre();
+                    case 2:
+                        return producto.getCostoPoUnidad();
+                    case 3:
+                        return producto.getCostoPublico();
+                    case 4:
+                        return producto.getGanancia();
+                    case 5:
+                        return producto.getCantidad();
+                    case 6:
+                        return producto.getTipoProducto();
+                    case 7:
+                        return producto.getProveedor();
+                }
+                return null;
+            }
+
+            public int getColumnCount() {
+                return 8;
+            }
+
+            public String getColumnName(int columna) {
+                switch (columna){
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "Nombre";
+                    case 2:
+                        return "Costo por unidad" ;
+                    case 3:
+                        return "Costo publico" ;
+                    case 4:
+                        return "Ganancia";
+                    case 5:
+                        return "Cantidad" ;
+                    case 6:
+                        return "Tipo producto";
+                    case 7:
+                        return "Proveedor";
+                }
+                return null;
+            }
+        };
     }
 
     private void fillTabla(){

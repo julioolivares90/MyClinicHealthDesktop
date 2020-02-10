@@ -58,6 +58,33 @@ public class ProductoDao  implements Crud{
         }
         return productoViewModel;
     }
+    public List<ProductoForTable> listaProductos(){
+        List<ProductoForTable> productos = new ArrayList<ProductoForTable>();
+        String query = "select p.id_producto , p.nombre , p.costo_por_unidad , p.costo_publico,p.ganancia,p.cantidad, t.tipo_producto,pro.nombre_proveedor from producto as p " +
+                "inner join tipo_producto as t on p.id_tipo_producto = t.id_tipo inner join proveedores as pro on p.id_proveedor = pro.id_proveedor";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                ProductoForTable productoForTable = new ProductoForTable();
+                productoForTable.setID(resultSet.getInt(1));
+                productoForTable.setNombre(resultSet.getString(2));
+                productoForTable.setCostoPoUnidad(resultSet.getDouble(3));
+                productoForTable.setCostoPublico(resultSet.getDouble(4));
+                productoForTable.setGanancia(resultSet.getDouble(5));
+                productoForTable.setCantidad(resultSet.getInt(6));
+                productoForTable.setTipoProducto(resultSet.getString(7));
+                productoForTable.setProveedor(resultSet.getString(8));
+
+                productos.add(productoForTable);
+
+            }
+        }catch (Exception ex){
+           System.out.println(ex.getMessage());
+        }
+        return productos;
+    }
     public List listar() {
         List<Producto> productos = new ArrayList<Producto>();
         String query = "select * from producto";
