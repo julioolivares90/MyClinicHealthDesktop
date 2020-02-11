@@ -22,7 +22,7 @@ public class Menu extends JFrame {
     private JButton btnProveedores;
 
     public Menu() {
-       
+
         setContentPane(principal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

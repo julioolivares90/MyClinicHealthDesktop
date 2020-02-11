@@ -3,12 +3,15 @@ package views;
 import Constantes.Constantes;
 import components.EditText;
 
+import controllers.CategoriasController;
 import models.Tipo;
 import models.TipoDao;
 import utilidades.Mensajes;
+import utilidades.ModeloDeTabla;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,16 +27,39 @@ public class NuevaCategoria  extends JFrame{
     private JTextField txtTipo;
     private JButton crearButton;
     private JTextArea txtDescripcion;
+
+    public JComboBox getComboBoxFilasPermitidas() {
+        return comboBoxFilasPermitidas;
+    }
+
+    public void setComboBoxFilasPermitidas(JComboBox comboBoxFilasPermitidas) {
+        this.comboBoxFilasPermitidas = comboBoxFilasPermitidas;
+    }
+
+    private JComboBox comboBoxFilasPermitidas;
+
+    public JTable getTblTipos() {
+        return tblTipos;
+    }
+
     private JTable tblTipos;
     private JButton btnActualizar;
     private JButton btnEliminar;
     private JTextField txtId;
+
+    public JPanel getPaginadorPanel() {
+        return paginadorPanel;
+    }
+
+    private JPanel paginadorPanel;
     private JTextField txtNombre;
 
-
+    private CategoriasController controller;
     DefaultTableModel tableModel;
     public NuevaCategoria() {
         //cargarDatos();
+        this.controller = new CategoriasController(this);
+
         crearButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
 
@@ -57,7 +83,7 @@ public class NuevaCategoria  extends JFrame{
                     if (res > 0){
                         JOptionPane.showMessageDialog(null,Constantes.AGREGADO_CON_EXITO);
                         limpiar();
-                        cargarDatos();
+                        //cargarDatos();
                     }else{
                         JOptionPane.showMessageDialog(null,Constantes.NOSE_PUDO_AGREGAR);
                         limpiar();
@@ -80,7 +106,7 @@ public class NuevaCategoria  extends JFrame{
                     int rs = tipoDao.update(tipo);
                     if (rs > 0){
                         JOptionPane.showMessageDialog(null,"Actualizado con exito");
-                        cargarDatos();
+                        //cargarDatos();
                         limpiar();
                     }
                     else {
@@ -100,7 +126,7 @@ public class NuevaCategoria  extends JFrame{
                     int rs = tipoDao.delete(id);
                     if (rs > 0 ){
                         JOptionPane.showMessageDialog(null,"Eliminado con exito!!");
-                        cargarDatos();
+                        //cargarDatos();
                         limpiar();
                     }else {
                         JOptionPane.showMessageDialog(null,"Ocurrio un error!!");
@@ -166,7 +192,46 @@ public class NuevaCategoria  extends JFrame{
         // TODO: place custom component creation code here
         txtNombre = new EditText();
         tblTipos = new JTable();
-
-        cargarDatos();
+        initTable();
+        //cargarDatos();
     }
+
+    private void initTable(){
+        this.tblTipos.setModel(crearModeloDeTabla());
+    }
+
+    private TableModel crearModeloDeTabla() {
+        return new ModeloDeTabla<Tipo>() {
+
+            public Object getValueAt(Tipo tipo, int columna) {
+                switch (columna){
+                    case 0:
+                        return tipo.getId();
+                    case 1:
+                        return tipo.getTipoProducto();
+                    case 2:
+                        return tipo.getDescripcion();
+                }
+                return null;
+            }
+
+            public int getColumnCount() {
+                return 3;
+            }
+
+            public String getColumnName(int columna) {
+                switch (columna){
+                    case 0:
+                        return "ID";
+                    case 1:
+                        return "Categoria";
+                    case 2:
+                        return "Descripcion";
+                }
+                return null;
+            }
+        };
+    }
+    //metodos get y set
+
 }

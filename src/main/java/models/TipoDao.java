@@ -76,7 +76,7 @@ public class TipoDao implements Crud {
 
     public int delete(int id) {
 
-        String query ="delete from tipo_producto where id=?";
+        String query ="delete from tipo_producto where id_tipo=?";
         int rs=0;
         try {
             connection = conexion.getConnection();
