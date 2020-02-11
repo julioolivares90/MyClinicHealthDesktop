@@ -22,8 +22,7 @@ public class Menu extends JFrame {
     private JButton btnProveedores;
 
     public Menu() {
-        this.setLocationRelativeTo(null);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+       
         setContentPane(principal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -51,21 +50,30 @@ public class Menu extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
 
                 NuevoMedicamento nuevoMedicamento = new NuevoMedicamento();
-                JFrame jFrame = new JFrame("Nuevo Medicamento");
-                jFrame.setContentPane(nuevoMedicamento.principal);
-                //jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                jFrame.setLocationRelativeTo(null);
-                jFrame.pack();
-                jFrame.setVisible(true);
+                nuevoMedicamento.setContentPane(nuevoMedicamento.principal);
+
+
+                Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+                int altura = pantalla.height;
+                int ancho = pantalla.width;
+                setSize(ancho/2,altura/2);
+                nuevoMedicamento.setLocationRelativeTo(null);
+                nuevoMedicamento.pack();
+                nuevoMedicamento.setVisible(true);
                 //menuCentral.add(nuevoMedicamento);
             }
         });
         btnMedicamentos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 Medicamentos medicamentos = new Medicamentos();
+                Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+                int altura = pantalla.height;
+                int ancho = pantalla.width;
+
                 JFrame jFrame = new JFrame("Medicamentos");
-                jFrame.setLocationRelativeTo(null);
                 jFrame.setContentPane(medicamentos.principal);
+                jFrame.setSize(ancho/2,altura/2);
+                jFrame.setLocationRelativeTo(null);
                 pack();
                 jFrame.setVisible(true);
 

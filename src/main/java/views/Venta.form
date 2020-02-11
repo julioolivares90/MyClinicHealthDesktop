@@ -119,6 +119,7 @@
                 <properties>
                   <editable value="false"/>
                   <enabled value="false"/>
+                  <foreground color="-16777216"/>
                   <preferredSize width="100" height="30"/>
                 </properties>
               </component>
@@ -150,6 +151,7 @@
                 <properties>
                   <editable value="false"/>
                   <enabled value="true"/>
+                  <foreground color="-16777216"/>
                   <minimumSize width="400" height="30"/>
                   <preferredSize width="400" height="30"/>
                 </properties>
@@ -173,6 +175,7 @@
                 <properties>
                   <editable value="false"/>
                   <enabled value="false"/>
+                  <foreground color="-16777216"/>
                   <preferredSize width="100" height="30"/>
                 </properties>
               </component>
@@ -250,6 +253,7 @@
                 <properties>
                   <editable value="false"/>
                   <enabled value="false"/>
+                  <foreground color="-16777216"/>
                   <preferredSize width="200" height="30"/>
                 </properties>
               </component>

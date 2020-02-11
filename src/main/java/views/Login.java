@@ -6,6 +6,7 @@ import models.UserLogin;
 import utilidades.Utilidades;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -57,6 +58,12 @@ public class Login extends JFrame {
                         JOptionPane.showMessageDialog(null, "Bienvenido!!!");
                         JFrame jFrame = new JFrame("Menu");
                         Menu menu = new Menu();
+                        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+                        int heigth = pantalla.height;
+                        int width = pantalla.width;
+                        setExtendedState(JFrame.MAXIMIZED_BOTH);
+                        menu.setSize(width,heigth);
+                        menu.setLocationRelativeTo(null);
                         menu.setVisible(true);
                         menu.pack();
                         hide();

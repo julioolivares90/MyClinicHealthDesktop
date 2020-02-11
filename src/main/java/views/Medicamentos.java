@@ -11,6 +11,7 @@ import utilidades.ModeloDeTabla;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -55,7 +56,6 @@ public class Medicamentos extends JFrame {
 
     public Medicamentos() {
         this.setContentPane(principal);
-        this.setLocationRelativeTo(null);
 
         controller = new ProductosController(this);
         tblMedicamentos.addMouseListener(new MouseAdapter() {
