@@ -88,7 +88,7 @@ public class TipoDao implements Crud {
         }
         return rs;
     }
-    
+
     public List<Tipo> getTiposComboBox(){
         List<Tipo> tipos = new ArrayList<Tipo>();
         String query = "select id_tipo , tipo_producto from tipo_producto";
