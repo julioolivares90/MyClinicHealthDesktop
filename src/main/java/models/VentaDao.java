@@ -2,12 +2,9 @@ package models;
 
 import conexion.Conexion;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 public class VentaDao  implements Crud{
     Connection connection;
@@ -17,8 +14,30 @@ public class VentaDao  implements Crud{
     ResultSet resultSet;
 
 
+    public List<VentaViewModel> listOfSales(){
+        List<VentaViewModel> ventas = new ArrayList<>();
+        String query = "select v.id_venta, v.fecha_venta,v.monto,v.descuento, u.nombre from ventas as v inner join usuarios as u on u.id = v.id_usuario";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                VentaViewModel venta = new VentaViewModel();
+                venta.setId_venta(resultSet.getInt(1));
+                venta.setFecha_venta(resultSet.getString(2));
+                venta.setMonto(resultSet.getDouble(3 ));
+                venta.setDescuento(resultSet.getInt(4));
+                venta.setNombreVendedor(resultSet.getString(5));
+                ventas.add(venta);
+            }
+        }catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        return ventas;
+    }
     public List listar() {
-        List<Venta> ventas = new ArrayList<Venta>();
+        List<VentaViewModel> ventas = new ArrayList<VentaViewModel>();
         String query = "select v.id_venta, v.fecha_venta,v.monto,v.descuento, u.nombre from ventas as v inner join usuarios as u on u.id = v.id_usuario";
         try {
             connection = conexion.getConnection();
@@ -27,8 +46,10 @@ public class VentaDao  implements Crud{
             while (resultSet.next()){
                 VentaViewModel venta = new VentaViewModel();
                 venta.setId_venta(resultSet.getInt(1));
-                venta.setFecha_venta(resultSet.getDate(2));
+                venta.setFecha_venta(resultSet.getDate(2).toString());
                 venta.setMonto(resultSet.getDouble(3 ));
+                venta.setNombreVendedor(resultSet.getString(4));
+                ventas.add(venta);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());

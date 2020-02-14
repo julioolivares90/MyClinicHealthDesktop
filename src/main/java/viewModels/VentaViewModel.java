@@ -1,10 +1,9 @@
-package models;
-
-import java.util.Date;
+package viewModels;
 
 public class VentaViewModel {
+
     private int id_venta;
-    private String fecha_venta;
+    private String  fecha_venta;
     private Double monto;
     private int descuento;
     private String nombreVendedor;
@@ -21,7 +20,7 @@ public class VentaViewModel {
         return fecha_venta;
     }
 
-    public void setFecha_venta(String  fecha_venta) {
+    public void setFecha_venta(String fecha_venta) {
         this.fecha_venta = fecha_venta;
     }
 

@@ -61,8 +61,9 @@ public class Login extends JFrame {
                         Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
                         int heigth = pantalla.height;
                         int width = pantalla.width;
-                        setExtendedState(JFrame.MAXIMIZED_BOTH);
-                        menu.setSize(width,heigth);
+                        setExtendedState(JFrame.MAXIMIZED_HORIZ);
+                        setExtendedState(JFrame.MAXIMIZED_VERT);
+                        //menu.setSize(width,heigth);
                         menu.setLocationRelativeTo(null);
                         menu.setVisible(true);
                         menu.pack();

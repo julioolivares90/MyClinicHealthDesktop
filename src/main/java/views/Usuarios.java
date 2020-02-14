@@ -2,6 +2,7 @@ package views;
 
 import models.*;
 import utilidades.Mensajes;
+import utilidades.Utilidades;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -21,10 +22,12 @@ public class Usuarios extends JFrame {
     private JComboBox cbTipoUser;
     private JTextField txtID;
     private JButton crearButton;
-    private JButton actualizarButton;
+
     private JButton eliminarButton;
     private JButton limpiarButton;
-    private JButton button1;
+    private JButton btnActualizar;
+
+    public  Usuario usuario = new Usuario();
 
     public Usuarios() {
         crearButton.addActionListener(new ActionListener() {
@@ -52,13 +55,17 @@ public class Usuarios extends JFrame {
                     usuario.setNombre(nombre);
                     usuario.setApellido(apellido);
                     usuario.setUserName(username);
-                    usuario.setPass(password);
+                    usuario.setPass(Utilidades.Encriptar(password));
 
                     int idRol = cbTipoUser.getSelectedIndex();
+                    Rol rol= new Rol();
+                    if (idRol>0){
+                        rol = (Rol) cbTipoUser.getItemAt(cbTipoUser.getSelectedIndex());
+                    }
                     if (idRol <= 0){
                         Mensajes.MensajeComboTipoUser();
                     }else {
-                        usuario.setId_rol(idRol);
+                        usuario.setId_rol(rol.getId_rol());
                         int res = usuarioDao.add(usuario);
                         if (res>0){
                             Mensajes.AgregadoConExito();
@@ -100,14 +107,61 @@ public class Usuarios extends JFrame {
                     Mensajes.SeleccionaUnaFila();
                 }else {
                     int id = Integer.parseInt(tblUsuarios.getValueAt(fila,0).toString());
+
+                    UsuarioDao usuarioDao = new UsuarioDao();
+                    usuario = usuarioDao.findUserByID(id);
+                    /*
                     String nombre = tblUsuarios.getValueAt(fila,1).toString();
                     String apellido = tblUsuarios.getValueAt(fila,2).toString();
                     String username = tblUsuarios.getValueAt(fila,3).toString();
 
-                    txtID.setText(String.valueOf(id)) ;
-                    txtNombre.setText(nombre);
-                    txtApellido.setText(apellido);
-                    txtUserName.setText(username);
+                     */
+
+                    txtID.setText(String.valueOf(usuario.getID()));
+                    txtNombre.setText(usuario.getNombre());
+                    txtApellido.setText(usuario.getApellido());
+                    txtUserName.setText(usuario.getUserName());
+                }
+            }
+        });
+        btnActualizar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                UsuarioDao usuarioDao = new UsuarioDao();
+                Usuario user = new Usuario();
+                String nombre = txtNombre.getText();
+                String apellido = txtApellido.getText();
+                String username = txtUserName.getText();
+
+                //int idTipoUser = cbTipoUser.getSelectedIndex();
+                //int idRol = cbTipoUser.getSelectedIndex();
+                Rol rol = new Rol();
+                if (cbTipoUser.getSelectedIndex() > 0){
+                    rol = (Rol) cbTipoUser.getItemAt(cbTipoUser.getSelectedIndex());
+                }
+                if (nombre.equals("")){
+                    Mensajes.MensajeDeVacio();
+                }else if (apellido.equals("")){
+                    Mensajes.MensajeDeVacio();
+                }else if (username.equals("")){
+                    Mensajes.MensajeDeVacio();
+                }else if (rol.getId_rol() <=0 ){
+                   rol.setId_rol(usuario.getId_rol());
+                }
+                else {
+                    user.setID(usuario.getID());
+                    user.setNombre(usuario.getNombre());
+                    user.setApellido(usuario.getApellido());
+                    user.setUserName(usuario.getUserName());
+                    user.setPass(usuario.getPass());
+                    user.setId_rol(rol.getId_rol());
+
+                    int res = usuarioDao.update(user);
+                    if (res > 0 ){
+                        JOptionPane.showMessageDialog(null,"Actualizado con exito",JOptionPane.ICON_PROPERTY,JOptionPane.INFORMATION_MESSAGE);
+                        fillTable();
+                    }else {
+                        JOptionPane.showMessageDialog(null,"Ocurrio un error !!",JOptionPane.MESSAGE_PROPERTY,JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -158,7 +212,7 @@ public class Usuarios extends JFrame {
         List<Rol> rols = rolDao.listar();
         cbTipoUser.addItem("Selecciona un usuario");
         for (Rol rol : rols){
-            cbTipoUser.addItem(rol.getRol());
+            cbTipoUser.addItem(rol);
         }
     }
 }

@@ -115,11 +115,7 @@ public class Preedores  extends  JFrame{
 
             }
         });
-        limpiarButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-               limpiar();
-            }
-        });
+        limpiarButton.addActionListener(actionEvent -> limpiar());
 
 
         tblProveedores.addMouseListener(new MouseAdapter() {
