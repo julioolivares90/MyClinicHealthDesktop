@@ -13,7 +13,7 @@ public class App {
         //JFrame jFrame = new JFrame("login");
         //jFrame.setSize(630,240);
         //jFrame.setContentPane(menu.principal);
-        Menu menu = new Menu();
+        //Menu menu = new Menu();
         //menu.setVisible(true);
         //menu.pack();
        /*

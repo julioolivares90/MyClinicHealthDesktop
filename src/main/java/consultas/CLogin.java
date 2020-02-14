@@ -29,8 +29,8 @@ public class CLogin {
 
                 userLogin.setId(resultSet.getInt(1));
                 userLogin.setNombre(resultSet.getString(2));
-                userLogin.setUsername(resultSet.getString(3));
-                userLogin.setRol(resultSet.getString(4));
+                userLogin.setUsername(resultSet.getString(5));
+                userLogin.setRol(resultSet.getString(5));
             }
 
         }catch (Exception e){

@@ -25,6 +25,7 @@ public class Menu extends JFrame {
 
     public Menu() {
 
+
         setContentPane(principal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -120,5 +121,19 @@ public class Menu extends JFrame {
         btnMedicamentos = new JButton(new ImageIcon("src/main/resources/icono_lista.png"));
         btnUsuarios = new JButton(new ImageIcon("src/main/resources/icono_lista_usuarios.png"));
         btnSalir = new JButton(new ImageIcon("src/main/resources/cerrar_ventana.png"));
+
+        checkRolUser();
+    }
+
+    private void checkRolUser(){
+
+        Login login = Login.getInstance();
+        if (login.getRol().equals("medico")){
+            btnProveedores.setEnabled(false);
+            
+            btnNuevaCategoria.setVisible(false);
+            btnUsuarios.setVisible(false);
+            btnProveedores.setVisible(false);
+        }
     }
 }

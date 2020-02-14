@@ -25,6 +25,7 @@ public class Login extends JFrame {
     }
 
     private int idUser=0;
+    private String Rol;
     private  static Login login;
     public synchronized static Login getInstance(){
         if (login == null) {
@@ -55,6 +56,7 @@ public class Login extends JFrame {
                     UserLogin userData = CLogin.Login(loginViewModel);
                     if (userData != null){
                         idUser = userData.getId();
+                        Rol = userData.getRol();
                         JOptionPane.showMessageDialog(null, "Bienvenido!!!");
                         JFrame jFrame = new JFrame("Menu");
                         Menu menu = new Menu();
@@ -87,5 +89,11 @@ public class Login extends JFrame {
         // TODO: place custom component creation code here
         logo1 = new JLabel(new ImageIcon("src/main/resources/doctor.png"));
 
+    }
+
+    //getter
+
+    public String getRol() {
+        return Rol;
     }
 }
