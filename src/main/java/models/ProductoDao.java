@@ -168,4 +168,20 @@ public class ProductoDao  implements Crud{
         }
         return rs;
     }
+
+    public int updateStock(int cantidad,int idProducto){
+        int rs = 0;
+        String sql = "update producto set cantidad=? where id_producto=? ";
+        try {
+            connection = conexion.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1,cantidad);
+            preparedStatement.setInt(2,idProducto);
+            rs = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return rs;
+    }
 }

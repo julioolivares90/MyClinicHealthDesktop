@@ -64,6 +64,7 @@ public class Venta {
                 txtStock.setText(String.valueOf(producto.getCantidad()));
                 txtPrecio.setText(String.valueOf(producto.getCostoPublico()));
 
+                BusquedaDeProductos.setInstance(null);
             }
         });
 
@@ -84,11 +85,7 @@ public class Venta {
                 }
             }
         });
-        btnAgregarAVenta.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                crearFilaTable(tblProductos);
-            }
-        });
+        btnAgregarAVenta.addActionListener(actionEvent -> crearFilaTable(tblProductos));
     }
 
 
@@ -113,6 +110,16 @@ public void limpiarData(){
         int des;
         if (descuento.equals("")){
             des =0;
+            venta.setMonto(Double.parseDouble(txtTotalAPagar.getText()));
+            venta.setFecha_venta(txtFechaActual.getText());
+            venta.setId_usuario(Login.getInstance().getIdUser());
+            venta.setDescuento(des);
+            int res = ventaDao.add(venta);
+            if (res > 0){
+                guardarDetalleVenta();
+            }else {
+                Mensajes.OcurrioUnError();
+            }
         }else {
             des = Integer.parseInt(txtDescuento.getText());
             venta.setMonto(Double.parseDouble(txtTotalAPagar.getText()));
@@ -140,10 +147,22 @@ public void limpiarData(){
 
             DetalleVenta detalleVenta = new DetalleVenta();
             detalleVenta.setId_venta(idVenta);
-            detalleVenta.setCantidad(Integer.parseInt(tblProductos.getValueAt(i,0).toString()));
+            detalleVenta.setCantidad(Integer.parseInt(tblProductos.getValueAt(i,2).toString()));
             detalleVenta.setPrecioVenta(Double.parseDouble(txtPrecio.getText()));
             detalleVenta.setId_producto(producto.getID());
             detalleVentaDao.add(detalleVenta);
+            int nuevaCantidad = producto.getCantidad()-detalleVenta.getCantidad();
+            updateStock(nuevaCantidad,producto.getID());
+        }
+    }
+
+    private void updateStock(int cantidad,int idProducto) {
+        ProductoDao productoDao = new ProductoDao();
+        int rs = productoDao.updateStock(cantidad,idProducto);
+        if (rs > 0){
+            System.out.println("producto actualizado con exito");
+        }else {
+            System.out.println("no se pudo actualziar el producto");
         }
     }
 
@@ -226,6 +245,8 @@ public void limpiarData(){
                 totalAPagar = totalAPagar-totalDescuento;
             }
         }
+        //totalAPagar =0.0;
         txtTotalAPagar.setText(String.valueOf(totalAPagar));
+        totalAPagar =0.0;
     }
 }

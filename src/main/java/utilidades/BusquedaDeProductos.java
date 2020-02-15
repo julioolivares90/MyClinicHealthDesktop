@@ -22,6 +22,9 @@ public class BusquedaDeProductos extends JDialog {
     }
 
     private static BusquedaDeProductos instance ;
+    public static void setInstance(BusquedaDeProductos instance){
+        BusquedaDeProductos.instance = instance;
+    }
 
     public synchronized static BusquedaDeProductos getInstance(){
         if (instance == null){
