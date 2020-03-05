@@ -1,5 +1,5 @@
 # MyClinicHealthDesktop
-pequeño sistema de ventas realizado en java desktop
+pequeño sistema de ventas realizado en java desktop realizado para una clinica pequeña
 ## capturas
 
 ![](https://github.com/julioolivares90/MyClinicHealthDesktop/blob/master/imagenes/img1.jpg)
